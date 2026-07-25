@@ -1,3 +1,5 @@
+declare const atom: any
+
 const {Range} = require('atom')
 const Insertion = require('./insertion')
 

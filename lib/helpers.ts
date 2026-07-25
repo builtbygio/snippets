@@ -1,3 +1,5 @@
+declare const atom: any
+
 /** @babel */
 
 import path from 'path'

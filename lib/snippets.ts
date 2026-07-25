@@ -1,3 +1,5 @@
+declare const atom: any
+
 const path = require('path')
 const {Emitter, Disposable, CompositeDisposable, File} = require('atom')
 const _ = require('underscore-plus')

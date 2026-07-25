@@ -1,3 +1,5 @@
+declare const atom: any
+
 const {Range} = require('atom')
 const TabStopList = require('./tab-stop-list')
 

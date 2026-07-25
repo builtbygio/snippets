@@ -1,3 +1,5 @@
+declare const atom: any
+
 const {CompositeDisposable, Range, Point} = require('atom')
 
 module.exports = class SnippetExpansion {
