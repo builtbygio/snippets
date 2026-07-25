@@ -182,7 +182,7 @@ describe("Snippet Loading", () => {
 
   describe("when ~/.atom/snippets.cson exists", () => {
     beforeEach(() => {
-      fs.writeFileSync(path.join(configDirPath, 'snippets.cson'), `\
+      fs.writeFileSync(path.join(configDirPath, 'snippets.json'), `\
 ".foo":
   "foo snippet":
     "prefix": "foo"
@@ -206,7 +206,7 @@ describe("Snippet Loading", () => {
 
     describe("when that file changes", () => {
       it("reloads the snippets", () => {
-        fs.writeFileSync(path.join(configDirPath, 'snippets.cson'), `\
+        fs.writeFileSync(path.join(configDirPath, 'snippets.json'), `\
 ".foo":
   "foo snippet":
     "prefix": "foo"
@@ -220,7 +220,7 @@ describe("Snippet Loading", () => {
         });
 
         runs(() => {
-          fs.writeFileSync(path.join(configDirPath, 'snippets.cson'), "");
+          fs.writeFileSync(path.join(configDirPath, 'snippets.json'), "");
         });
 
         waitsFor("snippets to be removed", () => {
@@ -232,7 +232,7 @@ describe("Snippet Loading", () => {
   });
 
   it("notifies the user when the user snippets file cannot be loaded", () => {
-    fs.writeFileSync(path.join(configDirPath, 'snippets.cson'), '".junk":::');
+    fs.writeFileSync(path.join(configDirPath, 'snippets.json'), '".junk":::');
 
     activateSnippetsPackage();
 

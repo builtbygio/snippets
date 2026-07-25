@@ -1128,7 +1128,7 @@ foo\
   });
 
   describe("when atom://.atom/snippets is opened", () => {
-    it("opens ~/.atom/snippets.cson", () => {
+    it("opens ~/.atom/snippets.json", () => {
       jasmine.unspy(Snippets, 'getUserSnippetsPath');
       atom.workspace.destroyActivePaneItem();
       const configDirPath = temp.mkdirSync('atom-config-dir-');
@@ -1138,7 +1138,7 @@ foo\
       waitsFor(() => atom.workspace.getActiveTextEditor() != null);
 
       runs(() => {
-        expect(atom.workspace.getActiveTextEditor().getURI()).toBe(path.join(configDirPath, 'snippets.cson'));
+        expect(atom.workspace.getActiveTextEditor().getURI()).toBe(path.join(configDirPath, 'snippets.json'));
       });
     });
   });

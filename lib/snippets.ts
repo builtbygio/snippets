@@ -92,7 +92,7 @@ module.exports = {
     if (this.userSnippetsPath != null) { return this.userSnippetsPath }
 
     this.userSnippetsPath = CSON.resolve(path.join(atom.getConfigDirPath(), 'snippets'))
-    if (this.userSnippetsPath == null) { this.userSnippetsPath = path.join(atom.getConfigDirPath(), 'snippets.cson') }
+    if (this.userSnippetsPath == null) { this.userSnippetsPath = path.join(atom.getConfigDirPath(), 'snippets.json') }
     return this.userSnippetsPath
   },
 
