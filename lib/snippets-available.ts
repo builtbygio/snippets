@@ -5,7 +5,7 @@ declare const atom: any
 import _ from 'underscore-plus'
 import SelectListView from 'atom-select-list'
 
-export default class SnippetsAvailable {
+class SnippetsAvailable {
   constructor (snippets) {
     this.panel = null
     this.snippets = snippets
@@ -84,3 +84,5 @@ export default class SnippetsAvailable {
     this.selectListView.focus()
   }
 }
+
+module.exports = SnippetsAvailable

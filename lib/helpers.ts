@@ -4,7 +4,7 @@ declare const atom: any
 
 import path from 'path'
 
-export function getPackageRoot() {
+function getPackageRoot() {
   const {resourcePath} = atom.getLoadSettings()
   const currentFileWasRequiredFromSnapshot = !path.isAbsolute(__dirname)
   if (currentFileWasRequiredFromSnapshot) {
@@ -12,4 +12,8 @@ export function getPackageRoot() {
   } else {
     return path.resolve(__dirname, '..')
   }
+}
+
+module.exports = {
+  getPackageRoot
 }
