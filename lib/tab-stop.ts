@@ -1,6 +1,6 @@
 declare const atom: any
 
-const {Range} = require('atom')
+const {Range} = require('chevron')
 const Insertion = require('./insertion')
 
 // A tab stop:

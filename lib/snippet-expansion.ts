@@ -1,6 +1,6 @@
 declare const atom: any
 
-const {CompositeDisposable, Range, Point} = require('atom')
+const {CompositeDisposable, Range, Point} = require('chevron')
 
 module.exports = class SnippetExpansion {
   constructor(snippet, editor, cursor, snippets) {
