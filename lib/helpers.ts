@@ -5,7 +5,7 @@ declare const atom: any
 import path from 'path'
 
 function getPackageRoot() {
-  const {resourcePath} = atom.getLoadSettings()
+  const {resourcePath} = chevron.getLoadSettings()
   const currentFileWasRequiredFromSnapshot = !path.isAbsolute(__dirname)
   if (currentFileWasRequiredFromSnapshot) {
     return path.join(resourcePath, 'node_modules', 'snippets')

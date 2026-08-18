@@ -32,9 +32,9 @@ module.exports = {
     this.disabledSnippetsScopedPropertyStore = new ScopedPropertyStore
 
     this.subscriptions = new CompositeDisposable
-    this.subscriptions.add(atom.workspace.addOpener(uri => {
+    this.subscriptions.add(chevron.workspace.addOpener(uri => {
       if (uri === 'atom://.atom/snippets') {
-        return atom.workspace.openTextFile(this.getUserSnippetsPath())
+        return chevron.workspace.openTextFile(this.getUserSnippetsPath())
       }
     }))
 
@@ -43,13 +43,13 @@ module.exports = {
       this.subscriptions.add(watchDisposable)
     })
 
-    this.subscriptions.add(atom.config.onDidChange('core.packagesWithSnippetsDisabled', ({newValue, oldValue}) => {
+    this.subscriptions.add(chevron.config.onDidChange('core.packagesWithSnippetsDisabled', ({newValue, oldValue}) => {
        this.handleDisabledPackagesDidChange(newValue, oldValue)
     }))
 
     const snippets = this
 
-    this.subscriptions.add(atom.commands.add('atom-text-editor', {
+    this.subscriptions.add(chevron.commands.add('atom-text-editor', {
       'snippets:expand'(event) {
         const editor = this.getModel()
         if (snippets.snippetToExpandUnderCursor(editor)) {
@@ -85,14 +85,14 @@ module.exports = {
     }
     this.emitter = null
     this.editorSnippetExpansions = null
-    atom.config.transact(() => this.subscriptions.dispose())
+    chevron.config.transact(() => this.subscriptions.dispose())
   },
 
   getUserSnippetsPath () {
     if (this.userSnippetsPath != null) { return this.userSnippetsPath }
 
-    this.userSnippetsPath = CSON.resolve(path.join(atom.getConfigDirPath(), 'snippets'))
-    if (this.userSnippetsPath == null) { this.userSnippetsPath = path.join(atom.getConfigDirPath(), 'snippets.json') }
+    this.userSnippetsPath = CSON.resolve(path.join(chevron.getConfigDirPath(), 'snippets'))
+    if (this.userSnippetsPath == null) { this.userSnippetsPath = path.join(chevron.getConfigDirPath(), 'snippets.json') }
     return this.userSnippetsPath
   },
 
@@ -100,7 +100,7 @@ module.exports = {
     this.loadBundledSnippets(bundledSnippets => {
       this.loadPackageSnippets(packageSnippets => {
         this.loadUserSnippets(userSnippets => {
-          atom.config.transact(() => {
+          chevron.config.transact(() => {
             for (const snippetSet of [bundledSnippets, packageSnippets, userSnippets]) {
               for (const filepath in snippetSet) {
                 const snippetsBySelector = snippetSet[filepath]
@@ -157,7 +157,7 @@ module.exports = {
           [this document][watches] for more info.
           [watches]:https://github.com/atom/atom/blob/master/docs/build-instructions/linux.md#typeerror-unable-to-watch-path\
           `
-          atom.notifications.addError(message, {dismissable: true})
+          chevron.notifications.addError(message, {dismissable: true})
         }
 
         callback(userSnippetsFileDisposable)
@@ -171,7 +171,7 @@ module.exports = {
   // can immediately re-process the snippets it contains.
   handleUserSnippetsDidChange () {
     const userSnippetsPath = this.getUserSnippetsPath()
-    atom.config.transact(() => {
+    chevron.config.transact(() => {
       this.clearSnippetsForPath(userSnippetsPath)
       this.loadSnippetsFile(userSnippetsPath, result => {
         this.add(userSnippetsPath, result)
@@ -192,7 +192,7 @@ module.exports = {
       if (!oldDisabledPackages.includes(p)) { packagesToRemove.push(p) }
     }
 
-    atom.config.transact(() => {
+    chevron.config.transact(() => {
       for (const p of packagesToRemove) { this.removeSnippetsForPackage(p) }
       for (const p of packagesToAdd) { this.addSnippetsForPackage(p) }
     })
@@ -218,8 +218,8 @@ module.exports = {
   },
 
   loadPackageSnippets (callback) {
-    const disabledPackageNames = atom.config.get('core.packagesWithSnippetsDisabled') || []
-    const packages = atom.packages.getLoadedPackages().sort((pack, _) => {
+    const disabledPackageNames = chevron.config.get('core.packagesWithSnippetsDisabled') || []
+    const packages = chevron.packages.getLoadedPackages().sort((pack, _) => {
       return /\/node_modules\//.test(pack.path) ? -1 : 1
     })
 
@@ -306,7 +306,7 @@ module.exports = {
     CSON.readFile(filePath, {allowDuplicateKeys: false}, (error, object = {}) => {
       if (error != null) {
         console.warn(`Error reading snippets file '${filePath}': ${error.stack != null ? error.stack : error}`)
-        atom.notifications.addError(`Failed to load snippets from '${filePath}'`, {detail: error.message, dismissable: true})
+        chevron.notifications.addError(`Failed to load snippets from '${filePath}'`, {detail: error.message, dismissable: true})
       }
       callback(object)
     })
@@ -382,8 +382,8 @@ module.exports = {
       "snippets"
     )
 
-    const legacyScopeDescriptor = atom.config.getLegacyScopeDescriptorForNewScopeDescriptor
-      ? atom.config.getLegacyScopeDescriptorForNewScopeDescriptor(scopeDescriptor)
+    const legacyScopeDescriptor = chevron.config.getLegacyScopeDescriptorForNewScopeDescriptor
+      ? chevron.config.getLegacyScopeDescriptorForNewScopeDescriptor(scopeDescriptor)
       : undefined
 
     if (legacyScopeDescriptor) {
@@ -622,7 +622,7 @@ module.exports = {
   },
 
   insert (snippet, editor, cursor) {
-    if (editor == null) { editor = atom.workspace.getActiveTextEditor() }
+    if (editor == null) { editor = chevron.workspace.getActiveTextEditor() }
     if (cursor == null) { cursor = editor.getLastCursor() }
     if (typeof snippet === 'string') {
       const bodyTree = this.getBodyParser().parse(snippet)

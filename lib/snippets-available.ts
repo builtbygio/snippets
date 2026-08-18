@@ -80,7 +80,7 @@ class SnippetsAvailable {
 
   attach () {
     this.previouslyFocusedElement = document.activeElement
-    this.panel = atom.workspace.addModalPanel({item: this})
+    this.panel = chevron.workspace.addModalPanel({item: this})
     this.selectListView.focus()
   }
 }
