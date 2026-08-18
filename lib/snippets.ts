@@ -33,7 +33,7 @@ module.exports = {
 
     this.subscriptions = new CompositeDisposable
     this.subscriptions.add(chevron.workspace.addOpener(uri => {
-      if (uri === 'atom://.atom/snippets') {
+      if (uri === 'chevron://.atom/snippets') {
         return chevron.workspace.openTextFile(this.getUserSnippetsPath())
       }
     }))
